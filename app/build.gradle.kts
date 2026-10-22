@@ -23,7 +23,7 @@ application {
 }
 
 tasks.named<JavaExec>("run") {
-    standardInput = System.`in`
+    standardInput = System.`in`         // keyboard input for the text menu
 }
 
 tasks.named<Test>("test") {
