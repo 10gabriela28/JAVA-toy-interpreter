@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.ExpressionException;
+import interpreter.exceptions.ADTException;
 
 public class MyDictionary<K,V> implements IDictionary<K,V> {
     private final HashMap<K, V> map;
@@ -18,22 +19,38 @@ public class MyDictionary<K,V> implements IDictionary<K,V> {
         return map.containsKey(key);
     }
 
+    @Override
     public void put(K key, V value){
         map.put(key, value);
     }
 
-    public void update(K key, V value){
+    @Override
+    public void update(K key, V value) throws MyException {
         if(!(isDefined(key))){
-            throw new ExpressionException("unable to find the key!");
+            throw new ADTException("unable to find the key!");
         }
         map.put(key, value);
     }
 
-    public V lookup(K key){
+    @Override
+    public V lookup(K key) throws MyException {
         if(!(isDefined(key))){
-            throw new ExpressionException("unable to find the key!");
+            throw new ADTException("unable to find the key!");
         }
         return map.get(key);
+    }
+
+    @Override
+    public void remove(K key) throws MyException {
+        if(!(isDefined(key))){
+            throw new ADTException("unable to find the key!");
+        }
+        map.remove(key);
+    }
+
+    @Override
+    public Map<K, V> getContent() {
+        return map;
     }
 
     @Override

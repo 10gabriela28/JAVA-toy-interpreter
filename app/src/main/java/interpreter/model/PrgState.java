@@ -26,7 +26,7 @@ public class PrgState {
         exeStack.push(program);
     }
 
-    public IStack getExeStacl(){
+    public IStack<IStmt> getExeStack(){
         return exeStack;
     }
 
