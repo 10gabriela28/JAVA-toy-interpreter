@@ -12,6 +12,7 @@ public record VarExp(String id) implements IExp {
         if(!symTable.isDefined(id)){
             throw new ExpressionException("value does not exist!");
         }
+        return symTable.lookup(id);
     }
 
     @Override

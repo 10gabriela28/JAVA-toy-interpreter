@@ -4,17 +4,19 @@ package interpreter.model.exp;
 import interpreter.model.exp.IExp;
 import interpreter.model.exp.ArithOp;
 import interpreter.model.value.IValue;
+import interpreter.model.value.IntValue;
 import interpreter.model.adt.IDictionary;
 import interpreter.exceptions.MyException;
+import interpreter.exceptions.ExpressionException;
 
-public record ArithExp(ArithOp op, IExp left, IExp right) {
+public record ArithExp(ArithOp op, IExp left, IExp right) implements IExp {
     @Override
     public IValue eval(IDictionary<String, IValue> symTable) throws MyException {
         if(!(left.eval(symTable) instanceof IntValue(int n1))){
             throw new ExpressionException("the first operand is not an integer.");
         }
         if(!(right.eval(symTable) instanceof IntValue(int n2))){
-            throw newExpressionException("the second operand is not an integer.");
+            throw new ExpressionException("the second operand is not an integer.");
         }
         return switch(op) {
             case ADD -> new IntValue(n1 + n2);
