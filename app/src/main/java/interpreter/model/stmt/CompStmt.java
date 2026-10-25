@@ -1,5 +1,22 @@
 
 package interpreter.model.stmt;
 
-public class CompStmt {
+import interpreter.model.PrgState;
+
+public record CompStmt(IStmt first, IStmt second) implements IStmt {
+    @Override
+    public PrgState execute(PrgState state){
+        state.getExeStack().push(second);
+        state.getExeStack().push(first);
+        return state;
+    }
+
+    @Override
+    public IStmt deepCopy(){
+        return new CompStmt(first.deepCopy(), second.deepCopy());
+    }
+
+    @Override
+    public String toString() {
+        return first + "; " + second + ";"; }
 }

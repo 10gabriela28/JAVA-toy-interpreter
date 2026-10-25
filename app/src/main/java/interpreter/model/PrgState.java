@@ -30,7 +30,7 @@ public class PrgState {
         return exeStack;
     }
 
-    public IDictionary getSymTable(){
+    public IDictionary<String, IValue> getSymTable(){
         return symTable;
     }
 

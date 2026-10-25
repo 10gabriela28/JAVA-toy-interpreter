@@ -6,4 +6,5 @@ import interpreter.exceptions.MyException;
 
 public interface IExp {
     IValue eval(IDictionary<String, IValue> symTable) throws MyException;
+    IExp deepCopy();
 }
