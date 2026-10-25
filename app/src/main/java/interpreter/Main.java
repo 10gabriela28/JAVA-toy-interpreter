@@ -3,12 +3,50 @@
  */
 package interpreter;
 
+import java.util.Stack;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+
+import interpreter.model.adt.IDictionary;
+import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.IStack;
+import interpreter.model.adt.MyStack;
+import interpreter.model.adt.IList;
+import interpreter.model.adt.MyList;
+
+
+import interpreter.model.PrgState;
+import interpreter.view.Examples;
+import interpreter.model.stmt.IStmt;
+
+import interpreter.repository.IRepository;
+import interpreter.repository.Repository;
+
+import interpreter.controller.Controller;
+
+import interpreter.exceptions.MyException;
+
 public class Main {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+    //public String getGreeting() {
+    //    return "Hello World!";
+    //}
 
     public static void main(String[] args) {
-        System.out.println(new Main().getGreeting());
+        Examples ex = new Examples();
+        IStmt st = ex.example2;
+
+        PrgState prgState = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), st);
+
+
+        Repository repo = new Repository(prgState);
+
+        Controller controller = new Controller(repo);
+
+        try {
+            controller.allStep();
+        } catch (Exception e){
+            System.out.println("runtime error! :(\n" + e.getMessage());
+        }
     }
 }

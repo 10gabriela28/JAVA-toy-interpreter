@@ -23,6 +23,11 @@ public record LogicExp(LogicOp op, IExp left, IExp right) implements IExp {
     }
 
     @Override
+    public IExp deepCopy() {
+        return new LogicExp(op, left.deepCopy(), right.deepCopy());
+    }
+
+    @Override
     public String toString(){
         return "(" + left + " " + op + " " + right + ")";
     }

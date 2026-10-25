@@ -34,7 +34,7 @@ public record VarDeclStmt(String id, IType val) implements IStmt {
 
     @Override
     public String toString(){
-        return id + val + ";";
+        return val + " " + id + "; ";
     }
 }
 

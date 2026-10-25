@@ -16,6 +16,12 @@ public record VarExp(String id) implements IExp {
     }
 
     @Override
+    public IExp deepCopy() {
+        return new VarExp(id);
+    }
+
+
+    @Override
     public String toString(){
         return id;
     }

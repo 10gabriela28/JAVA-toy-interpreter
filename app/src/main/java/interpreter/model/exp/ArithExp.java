@@ -30,6 +30,12 @@ public record ArithExp(ArithOp op, IExp left, IExp right) implements IExp {
             }
         };
     }
+
+    @Override
+    public IExp deepCopy() {
+        return new ArithExp(op, left.deepCopy(), right.deepCopy());
+    }
+
     @Override
     public String toString(){
         return "(" + left + " " + op + " " + right + ")";

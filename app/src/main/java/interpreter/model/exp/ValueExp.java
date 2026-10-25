@@ -12,6 +12,11 @@ public record ValueExp(IValue val) implements IExp {
     }
 
     @Override
+    public IExp deepCopy() {
+        return new ValueExp(val);
+    }
+
+    @Override
     public String toString() {
         return val.toString();
     }
