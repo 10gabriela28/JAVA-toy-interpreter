@@ -1,12 +1,17 @@
 
 package interpreter.model.type;
 
-import interpreter.model.value.IValue;
 import interpreter.model.value.BoolValue;
+import interpreter.model.value.IValue;
 
-public class BoolType implements IType {
+public record BoolType() implements IType {
     @Override
-    public IValue defaultValue() { return new BoolValue(false); }
+    public IValue defaultValue() {
+        return new BoolValue(false);
+    }
+
     @Override
-    public String toString() { return "bool"; }
+    public String toString() {
+        return "bool";
+    }
 }

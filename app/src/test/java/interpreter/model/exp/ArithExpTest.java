@@ -11,6 +11,7 @@ import interpreter.model.adt.MyDictionary;
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.ExpressionException;
 
+import interpreter.model.exp.ArithOp;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,6 @@ class ArithExpTest {
     void divisionByZeroThrows() {
         IExp e = new ArithExp(ArithOp.DIV, num(1), num(0));
         var ex = assertThrows(ExpressionException.class, () -> e.eval(symTable));
-        assertEquals("division by zero", ex.getMessage());
+        assertEquals("cannot divide by zero!", ex.getMessage());
     }
 }

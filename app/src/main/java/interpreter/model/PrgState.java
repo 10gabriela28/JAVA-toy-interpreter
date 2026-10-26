@@ -23,7 +23,9 @@ public class PrgState {
         this.symTable = symTable;
         this.out = out;
         this.originalProgram = program;
-        exeStack.push(program);
+        if (program != null) {
+            exeStack.push(program);
+        }
     }
 
     public IStack<IStmt> getExeStack(){
