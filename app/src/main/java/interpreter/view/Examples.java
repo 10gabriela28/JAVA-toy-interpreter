@@ -37,4 +37,14 @@ public class Examples {
                     new CompStmt(new VarDeclStmt("m", new IntType()),
                             new CompStmt(new AssignStmt("m", new ValueExp(new IntValue(13))),
                                     new PrintStmt(new ArithExp(ArithOp.ADD, new VarExp("n"), new VarExp("m")))))));
+
+
+    public IStmt example3 = new CompStmt(new VarDeclStmt("a", new BoolType()),
+            new CompStmt(new VarDeclStmt("v", new IntType()),
+                    new CompStmt(new AssignStmt("a", new ValueExp(new BoolValue(true))),
+                            new CompStmt(new IfStmt(new VarExp("a"),
+                                    new AssignStmt("v", new ValueExp(new IntValue(2))),
+                                    new AssignStmt("v", new ValueExp(new IntValue(3)))),
+                                    new PrintStmt(new VarExp("v"))))));
+
 }
