@@ -1,31 +1,38 @@
 
 package interpreter.model;
 
-import java.util.ArrayList;
-import java.util.Stack;
-import java.util.List;
-
+import java.io.BufferedReader;
 import interpreter.model.stmt.IStmt;
 import interpreter.model.value.IValue;
+import interpreter.model.value.StringValue;
 import interpreter.model.adt.IDictionary;
 import interpreter.model.adt.IStack;
 import interpreter.model.adt.IList;
-
+import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyStack;
+import interpreter.model.adt.MyList;
 
 public class PrgState {
     private IStack<IStmt> exeStack;
     private IDictionary<String, IValue> symTable;
+    private IDictionary<StringValue, BufferedReader> fileTable; // Correct types!
     private IList<IValue> out;
     private final IStmt originalProgram;
 
-    public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable, IList<IValue> out, IStmt program){
+    public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable,
+                    IDictionary<StringValue, BufferedReader> fileTable, IList<IValue> out, IStmt program){
         this.exeStack = exeStack;
         this.symTable = symTable;
+        this.fileTable = fileTable; // Correctly assigned!
         this.out = out;
         this.originalProgram = program;
         if (program != null) {
             exeStack.push(program);
         }
+    }
+
+    public static PrgState of(IStmt program) {
+        return new PrgState(new MyStack<>(), new MyDictionary<>(), new MyDictionary<>(), new MyList<>(), program);
     }
 
     public IStack<IStmt> getExeStack(){
@@ -36,7 +43,11 @@ public class PrgState {
         return symTable;
     }
 
-    public IList getOut(){
+    public IDictionary<StringValue, BufferedReader> getFileTable() {
+        return fileTable;
+    }
+
+    public IList<IValue> getOut(){
         return out;
     }
 
@@ -44,22 +55,25 @@ public class PrgState {
         return originalProgram;
     }
 
-    public void setExeStack(IStack exeStack){
+    public void setExeStack(IStack<IStmt> exeStack){
         this.exeStack = exeStack;
     }
 
-    public void setSymTable(IDictionary symTable){
+    public void setSymTable(IDictionary<String, IValue> symTable){
         this.symTable = symTable;
     }
 
-    public void setOut(IList out){
+    public void setFileTable(IDictionary<StringValue, BufferedReader> fileTable) {
+        this.fileTable = fileTable;
+    }
+
+    public void setOut(IList<IValue> out){
         this.out = out;
     }
 
     @Override
     public String toString() {
         return "PrgState:\n" + exeStack + "\n" +
-                symTable + "\n" + out + "\n";
+                symTable + "\n" + fileTable + "\n" + out + "\n";
     }
-
 }
