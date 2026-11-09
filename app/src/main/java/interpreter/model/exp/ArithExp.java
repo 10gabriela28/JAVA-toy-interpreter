@@ -43,6 +43,3 @@ public record ArithExp(ArithOp op, IExp left, IExp right) implements IExp {
 }
 
 
-// LEFT TO DO:
-// ValueExp (returns its value), VarExp (looks the variable up)
-// LogicOp + LogicExp (both "and" and "or" must be booleans.)

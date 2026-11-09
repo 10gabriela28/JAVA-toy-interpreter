@@ -1,5 +1,4 @@
-
 package interpreter.model.exp;
 
-public record readFile() {
+public record RelationalExp() {
 }

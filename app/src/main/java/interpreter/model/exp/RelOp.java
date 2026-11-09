@@ -1,5 +1,5 @@
 
 package interpreter.model.exp;
 
-public record openRFile() {
+public enum RelOp() {
 }

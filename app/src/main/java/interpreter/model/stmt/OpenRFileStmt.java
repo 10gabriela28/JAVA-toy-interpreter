@@ -40,6 +40,11 @@ public record OpenRFileStmt(IExp exp) implements IStmt {
     }
 
     @Override
+    public IStmt deepCopy() {
+        return new OpenRFileStmt(exp.deepCopy());
+    }
+
+    @Override
     public String toString() {
         return "openRFile(" + exp + ")";
     }
