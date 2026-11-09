@@ -1,6 +1,7 @@
 
 package interpreter.view;
 
+import interpreter.model.exp.*;
 import interpreter.model.stmt.IStmt;
 import interpreter.model.stmt.VarDeclStmt;
 import interpreter.model.stmt.AssignStmt;
@@ -19,17 +20,6 @@ import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.StringValue;
-import interpreter.model.exp.IExp;
-import interpreter.model.exp.ValueExp;
-import interpreter.model.exp.VarExp;
-
-import interpreter.model.exp.IExp;
-import interpreter.model.exp.ArithOp;
-import interpreter.model.exp.ArithExp;
-import interpreter.model.exp.LogicExp;
-import interpreter.model.exp.LogicOp;
-import interpreter.model.exp.ValueExp;
-import interpreter.model.exp.VarExp;
 
 public class Examples {
     public static final IStmt example1 = new CompStmt(new VarDeclStmt("v", new IntType()),
@@ -63,6 +53,18 @@ public class Examples {
                                                             new CompStmt(new PrintStmt(new VarExp("varc")),
                                                                     new CloseRFileStmt(new VarExp("varf"))))))))));
 
-    public static final IStmt example5 = new CompStmt(new VarDeclStmt("a", new IntType()), new CompStmt(new VarDeclStmt("b", new IntType()), new CompStmt(new AssignStmt("a", new ValueExp(new IntValue(5)), new CompStmt(new AssignStmt("b", new ValueExp(new IntValue(7)), new CompStmt(new IfStmt(new VarExp("a"), ))))))));
-            // int a; int b; a = 5; b = 7;
+    public static final IStmt example = new CompStmt(
+            new VarDeclStmt("a", new IntType()),
+            new CompStmt(new VarDeclStmt("b", new IntType()),
+                    new CompStmt(new AssignStmt("a", new ValueExp(new IntValue(5))),
+                            new CompStmt(new AssignStmt("b", new ValueExp(new IntValue(7))),
+                                    new IfStmt(
+                                            new RelationalExp(RelOp.SMALLERTHAN, new VarExp("a"), new VarExp("b")),
+                                            new PrintStmt(new VarExp("a")),
+                                            new PrintStmt(new VarExp("b"))
+                                    )
+                            )
+                    )
+            )
+    );
 }
