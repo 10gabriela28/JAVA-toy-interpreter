@@ -53,7 +53,7 @@ public class Examples {
                                                             new CompStmt(new PrintStmt(new VarExp("varc")),
                                                                     new CloseRFileStmt(new VarExp("varf"))))))))));
 
-    public static final IStmt example = new CompStmt(
+    public static final IStmt example5 = new CompStmt(
             new VarDeclStmt("a", new IntType()),
             new CompStmt(new VarDeclStmt("b", new IntType()),
                     new CompStmt(new AssignStmt("a", new ValueExp(new IntValue(5))),

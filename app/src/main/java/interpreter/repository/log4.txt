@@ -1,0 +1,23 @@
+ExeStack:
+(string varf; (varf = "test.in"; (openRFile(varf); (int varc; …))))
+SymTable:
+Out:
+FileTable:
+
+ExeStack:
+(int varc; (readFile(varf, varc); (print(varc); (readFile(varf, varc); …))))
+SymTable:
+varf --> "test.in"
+Out:
+FileTable:
+test.in
+
+ExeStack:
+readFile(varf, varc)
+(print(varc); (readFile(varf, varc); (print(varc); closeRFile(varf))))
+SymTable:
+varf --> "test.in"
+varc --> 0
+Out:
+FileTable:
+test.in

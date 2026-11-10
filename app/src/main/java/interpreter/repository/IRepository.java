@@ -1,6 +1,7 @@
 
 package interpreter.repository;
 
+import interpreter.exceptions.MyException;
 import interpreter.model.PrgState;
 import java.util.List;
 
@@ -9,4 +10,5 @@ public interface IRepository {
     void add(PrgState prgstate);
     List<PrgState> getPrgList();
     void setPrgList(List<PrgState> prgList);
+    void logPrgStateExec() throws MyException;
 }

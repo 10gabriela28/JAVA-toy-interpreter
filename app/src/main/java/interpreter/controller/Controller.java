@@ -18,8 +18,9 @@ import interpreter.exceptions.StatementException;
 public class Controller {
     private IRepository repo;
     private boolean display = true;
-    private void display(PrgState state){
-        if(display){
+
+    private void display(PrgState state) {
+        if (display) {
             System.out.println(state);
         }
     }
@@ -28,6 +29,10 @@ public class Controller {
         this.repo = repo;
     }
 
+    public Controller(IRepository repo, boolean display) {
+        this.repo = repo;
+        this.display = display;
+    }
 
     public PrgState oneStep(PrgState state) throws MyException {
         var stack = state.getExeStack();
@@ -40,11 +45,12 @@ public class Controller {
 
     public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
-        display(prg);                         // only if the display flag is on
+        repo.logPrgStateExec();
+        display(prg);
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
+            repo.logPrgStateExec();
             display(prg);
-
         }
     }
 }
