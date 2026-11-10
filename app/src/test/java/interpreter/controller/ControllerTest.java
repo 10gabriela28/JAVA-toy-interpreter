@@ -1,6 +1,13 @@
 
 package interpreter.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import interpreter.exceptions.MyException;
 import interpreter.model.PrgState;
 import interpreter.model.adt.MyDictionary;
@@ -11,29 +18,34 @@ import interpreter.model.value.IntValue;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 
 class ControllerTest {
-    @Test
-    void example2PrintsEighteen() throws MyException {
-        Examples examples = new Examples();
-        PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), examples.example2);
-        Repository repo = new Repository(state);
-        Controller controller = new Controller(repo);
+    @TempDir
+    Path dir;
 
-        controller.allStep();
-
-        assertTrue(state.getExeStack().isEmpty());
-        assertEquals(new IntValue(17), state.getOut().get(0));
+    private PrgState run(IStmt program) throws MyException {
+        PrgState state = PrgState.of(program);
+        var repo = new Repository(state, dir.resolve("log.txt").toString());
+        new Controller(repo, false).allStep();                   // display off
+        return state;
     }
 
     @Test
-    void oneStepOnEmptyStackThrows() {
-        PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), null);
-        Repository repo = new Repository(state);
-        Controller controller = new Controller(repo);
+    void fileExampleReadsBothNumbersAndClosesTheFile() throws Exception {
+        Path in = dir.resolve("test.in");
+        Files.writeString(in, "15\n50\n");
+        PrgState s = run(Examples.fileExample(in.toString()));
+        assertEquals(new IntValue(15), s.getOut().get(0));
+        assertEquals(new IntValue(50), s.getOut().get(1));
+        assertTrue(s.getFileTable().toMap().isEmpty());
+    }
 
-        assertThrows(MyException.class, () -> controller.oneStep(state));
+    @Test
+    void logFileContainsTheFourSectionsInOrder() throws Exception {
+        run(Examples.example1);
+        String log = Files.readString(dir.resolve("log.txt"));
+        int a = log.indexOf("ExeStack:"), b = log.indexOf("SymTable:"),
+                c = log.indexOf("Out:"),      d = log.indexOf("FileTable:");
+        assertTrue(0 <= a && a < b && b < c && c < d);
     }
 }

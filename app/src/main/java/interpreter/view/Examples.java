@@ -67,4 +67,17 @@ public class Examples {
                     )
             )
     );
+
+    public static IStmt fileExample(String fileName) {
+        return new CompStmt(new VarDeclStmt("varf", new StringType()),
+                new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),
+                        new CompStmt(new OpenRFileStmt(new VarExp("varf")),
+                                new CompStmt(new VarDeclStmt("varc", new IntType()),
+                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),
+                                                new CompStmt(new PrintStmt(new VarExp("varc")),
+                                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),
+                                                                new CompStmt(new PrintStmt(new VarExp("varc")),
+                                                                        new CloseRFileStmt(new VarExp("varf"))))))))));
+    }
+
 }

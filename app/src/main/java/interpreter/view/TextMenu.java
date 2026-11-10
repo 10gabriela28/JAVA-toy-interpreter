@@ -3,6 +3,7 @@ package interpreter.view;
 
 import java.util.Map;
 import java.util.Scanner;
+import java.util.LinkedHashMap;
 
 public class TextMenu {
     private final Map<String, Command> commands = new LinkedHashMap<>();
