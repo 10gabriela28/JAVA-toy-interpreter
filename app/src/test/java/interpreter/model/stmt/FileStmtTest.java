@@ -2,51 +2,53 @@
 package interpreter.model.stmt;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import interpreter.model.PrgState;
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.StatementException;
-import interpreter.model.exp.IExp;
 import interpreter.model.exp.ValueExp;
-import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import interpreter.model.value.StringValue;
 import interpreter.model.type.IntType;
 
 class FileStmtTest {
-    @TempDir
-    Path dir;                                    // a new empty folder for every test
-
+    private final String fileName = "numbers.in";
     private PrgState state;
-    private ValueExp file;                       // the expression "<dir>/numbers.in"
+    private ValueExp fileExp;
 
     @BeforeEach
     void setUp() throws Exception {
-        Path f = dir.resolve("numbers.in");
-        Files.writeString(f, "7\n");
-        file = new ValueExp(new StringValue(f.toString()));
+        Files.writeString(Path.of(fileName), "7\n");
+        fileExp = new ValueExp(new StringValue(fileName));
         state = PrgState.of(new NopStmt());
         new VarDeclStmt("x", new IntType()).execute(state);
     }
 
+    @AfterEach
+    void tearDown() throws Exception {
+        Files.deleteIfExists(Path.of(fileName));
+    }
+
     @Test
     void readGivesTheNextNumberThenZeroAtTheEnd() throws MyException {
-        new OpenRFileStmt(file).execute(state);
-        new ReadFileStmt(file, "x").execute(state);
+        new OpenRFileStmt(fileExp).execute(state);
+        new ReadFileStmt(fileExp, "x").execute(state);
         assertEquals(new IntValue(7), state.getSymTable().lookup("x"));
-        new ReadFileStmt(file, "x").execute(state);
+        new ReadFileStmt(fileExp, "x").execute(state);
         assertEquals(new IntValue(0), state.getSymTable().lookup("x"));
+        new CloseRFileStmt(fileExp).execute(state);
     }
 
     @Test
     void openingTheSameFileTwiceThrows() throws MyException {
-        new OpenRFileStmt(file).execute(state);
+        new OpenRFileStmt(fileExp).execute(state);
         assertThrows(StatementException.class,
-                () -> new OpenRFileStmt(file).execute(state));
+                () -> new OpenRFileStmt(fileExp).execute(state));
+        new CloseRFileStmt(fileExp).execute(state);
     }
 }

@@ -35,6 +35,11 @@ public class PrgState {
         return new PrgState(new MyStack<>(), new MyDictionary<>(), new MyDictionary<>(), new MyList<>(), program);
     }
 
+    public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable,
+                    IList<IValue> out, IStmt program) {
+        this(exeStack, symTable, new MyDictionary<>(), out, program);
+    }
+
     public IStack<IStmt> getExeStack(){
         return exeStack;
     }
