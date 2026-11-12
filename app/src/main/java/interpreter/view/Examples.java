@@ -68,6 +68,7 @@ public class Examples {
             )
     );
 
+    // this is for testing. can't directly use example 4 because of hardcoding. yay
     public static IStmt fileExample(String fileName) {
         return new CompStmt(new VarDeclStmt("varf", new StringType()),
                 new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),
@@ -79,5 +80,47 @@ public class Examples {
                                                                 new CompStmt(new PrintStmt(new VarExp("varc")),
                                                                         new CloseRFileStmt(new VarExp("varf"))))))))));
     }
+
+    // my own example :) - very similar to example 4. just genuinely trying to understand this concept.
+    // string fileP  ; fileP = "test2.in"; int a; string customMsg1; customMsg1 = "oops :("; string customMsg2; customMsg2 = "tough luck :("; if (!fileP.isEmpty()) { openRFile(fileP); readFile(fileP, a)  ; if (a > 10) { print(a) } else { print(customMsg1); } closeRFile(fileP); } else { print(customMsg2); }
+    public static IStmt example6 = new CompStmt(
+            new VarDeclStmt("fileP", new StringType()),
+            new CompStmt(
+                    new AssignStmt("fileP", new ValueExp(new StringValue("test2.in"))),
+                    new CompStmt(
+                            new VarDeclStmt("a", new IntType()),
+                            new CompStmt(
+                                    new VarDeclStmt("customMsg1", new StringType()),
+                                    new CompStmt(
+                                            new AssignStmt("customMsg1", new ValueExp(new StringValue("oops :("))),
+                                            new CompStmt(
+                                                    new VarDeclStmt("customMsg2", new StringType()),
+                                                    new CompStmt(
+                                                            new AssignStmt("customMsg2", new ValueExp(new StringValue("tough luck :("))),
+                                                            new IfStmt(
+                                                                    new RelationalExp(RelOp.NOTEQUALTO, new VarExp("fileP"), new ValueExp(new StringValue(""))),
+                                                                    new CompStmt(
+                                                                            new OpenRFileStmt(new VarExp("fileP")),
+                                                                            new CompStmt(
+                                                                                    new ReadFileStmt(new VarExp("fileP"), "a"),
+                                                                                    new CompStmt(
+                                                                                            new IfStmt(
+                                                                                                    new RelationalExp(RelOp.GREATERTHAN, new VarExp("a"), new ValueExp(new IntValue(10))),
+                                                                                                    new PrintStmt(new VarExp("a")),
+                                                                                                    new PrintStmt(new VarExp("customMsg1"))
+                                                                                            ),
+                                                                                            new CloseRFileStmt(new VarExp("fileP"))
+                                                                                    )
+                                                                            )
+                                                                    ),
+                                                                    new PrintStmt(new VarExp("customMsg2"))
+                                                            )
+                                                    )
+                                            )
+                                    )
+                            )
+                    )
+            )
+    );
 
 }

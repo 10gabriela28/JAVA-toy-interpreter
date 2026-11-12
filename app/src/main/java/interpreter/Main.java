@@ -31,7 +31,8 @@ public class Main {
                 Examples.example2,
                 Examples.example3,
                 Examples.example4,
-                Examples.example5
+                Examples.example5,
+                Examples.example6
         );
 
         TextMenu menu = new TextMenu();
