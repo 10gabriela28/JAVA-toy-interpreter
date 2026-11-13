@@ -32,7 +32,8 @@ public class Main {
                 Examples.example3,
                 Examples.example4,
                 Examples.example5,
-                Examples.example6
+               Examples.example6,
+                Examples.labExample1
         );
 
         TextMenu menu = new TextMenu();

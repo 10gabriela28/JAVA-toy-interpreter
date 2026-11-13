@@ -15,11 +15,16 @@ import interpreter.model.exp.ValueExp;
 import interpreter.model.value.IntValue;
 import interpreter.model.value.StringValue;
 import interpreter.model.type.IntType;
+import org.junit.jupiter.api.io.TempDir;
 
 class FileStmtTest {
+    @TempDir
+    Path dir;
+
     private final String fileName = "numbers.in";
     private PrgState state;
     private ValueExp fileExp;
+
 
     @BeforeEach
     void setUp() throws Exception {
