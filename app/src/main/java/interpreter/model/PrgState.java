@@ -37,6 +37,11 @@ public class PrgState {
         }
     }
 
+    public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable,
+                    IList<IValue> out, IStmt program) {
+        this(exeStack, symTable, out, new MyDictionary<>(), new MyHeap(), program);
+    }
+
     public static PrgState of(IStmt program){
         return new PrgState(
                 new MyStack<>(),

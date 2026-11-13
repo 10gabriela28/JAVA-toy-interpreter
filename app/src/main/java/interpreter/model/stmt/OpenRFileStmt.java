@@ -19,7 +19,7 @@ public record OpenRFileStmt(IExp exp) implements IStmt {
     public PrgState execute(PrgState state) throws MyException {
         var fileTable = state.getFileTable();
 
-        IValue val = exp.eval(state.getSymTable());
+        IValue val = exp.eval(state.getSymTable(), state.getHeap());
         if (!val.getType().equals(new StringType())) {
             throw new StatementException("cannot work with a non-string expression!");
         }

@@ -7,6 +7,8 @@ import interpreter.model.value.BoolValue;
 
 import interpreter.model.adt.IDictionary;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.IHeap;
+import interpreter.model.adt.MyHeap;
 
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.ExpressionException;
@@ -24,19 +26,19 @@ class LogicExpTest {
     @Test
     void testAndOperation() throws MyException {
         IExp e = new LogicExp(LogicOp.AND, boo(true), boo(false));
-        assertEquals(new BoolValue(false), e.eval(symTable));
+        assertEquals(new BoolValue(false), e.eval(symTable, new MyHeap()));
     }
 
     @Test
     void testOrOperation() throws MyException {
         IExp e = new LogicExp(LogicOp.OR, boo(true), boo(false));
-        assertEquals(new BoolValue(true), e.eval(symTable));
+        assertEquals(new BoolValue(true), e.eval(symTable, new MyHeap()));
     }
 
     @Test
     void nonBooleanOpThrows() {
         IExp e = new LogicExp(LogicOp.AND, new ValueExp(new IntValue(1)), boo(true));
-        assertThrows(MyException.class, () -> e.eval(symTable));
+        assertThrows(MyException.class, () -> e.eval(symTable, new MyHeap()));
     }
 
 }

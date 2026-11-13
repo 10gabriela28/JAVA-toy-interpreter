@@ -16,7 +16,7 @@ public record IfStmt(IExp exp, IStmt thenStmt, IStmt elseStmt) implements IStmt 
         var symTable = state.getSymTable();
         var exeStack = state.getExeStack();
 
-        IValue val = exp.eval(symTable);
+        IValue val = exp.eval(symTable, state.getHeap());
         if(!val.getType().equals(new BoolType())){
             throw new StatementException("the expression can ONLY evaluate to a boolean value.");
         }

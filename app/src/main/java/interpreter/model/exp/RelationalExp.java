@@ -7,6 +7,7 @@ import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import interpreter.model.value.BoolValue;
 import interpreter.model.adt.IDictionary;
+import interpreter.model.adt.IHeap;
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.ExpressionException;
 
@@ -14,11 +15,11 @@ import interpreter.exceptions.ExpressionException;
 
 public record RelationalExp(RelOp op, IExp left, IExp right) implements IExp {
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable) throws MyException{
-        if(!(left.eval(symTable) instanceof IntValue(int n1))){
+    public IValue eval(IDictionary<String, IValue> symTable, IHeap heap) throws MyException{
+        if(!(left.eval(symTable, heap) instanceof IntValue(int n1))){
             throw new ExpressionException("this variable wasn't defined!");
         }
-        if(!(right.eval(symTable) instanceof IntValue(int n2))){
+        if(!(right.eval(symTable, heap) instanceof IntValue(int n2))){
             throw new ExpressionException("this variable wasn't defined!");
         }
         return switch(op){

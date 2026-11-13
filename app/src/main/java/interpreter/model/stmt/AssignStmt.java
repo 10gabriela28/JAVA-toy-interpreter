@@ -14,6 +14,7 @@ import interpreter.exceptions.StatementException;
 import interpreter.model.exp.IExp;
 import interpreter.model.value.IValue;
 import interpreter.model.type.IType;
+import interpreter.model.adt.IHeap;
 
 
 
@@ -25,7 +26,7 @@ public record AssignStmt(String id, IExp exp) implements IStmt {
         if(!symTable.isDefined(id)){
             throw new StatementException("this variable was not declared!");
         }
-        IValue val = exp.eval(symTable);
+        IValue val = exp.eval(symTable, state.getHeap());
         if(!val.getType().equals(symTable.lookup(id).getType())){
             throw new StatementException("the declared type of variable and the type of the assigned expression DO NOT match.");
         }

@@ -15,7 +15,7 @@ public record PrintStmt(IExp exp) implements IStmt {
         var out = state.getOut();
         var symTable = state.getSymTable();
 
-        IValue val = exp.eval(symTable);
+        IValue val = exp.eval(symTable, state.getHeap());
         out.add(val);
 
         return state;

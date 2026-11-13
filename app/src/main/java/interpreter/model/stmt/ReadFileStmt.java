@@ -28,7 +28,7 @@ public record ReadFileStmt(IExp exp, String id) implements IStmt {
             throw new StatementException("this variable must be an integer!");
         }
 
-        IValue val = exp.eval(symTable);
+        IValue val = exp.eval(symTable, state.getHeap());
         if (!val.getType().equals(new StringType())) {
             throw new StatementException("this value must be a string!");
         }
