@@ -34,11 +34,11 @@ public class Main {
                 Examples.example5,
                 Examples.additionalExample,
                 Examples.labExample1,
-                Examples.example6
-//                Examples.example7,
-//                Examples.example8,
-//                Examples.example9,
-//                Examples.example10
+                Examples.example6,
+                Examples.example7,
+                Examples.example8,
+                Examples.example9,
+                Examples.example10
         );
 
         TextMenu menu = new TextMenu();
