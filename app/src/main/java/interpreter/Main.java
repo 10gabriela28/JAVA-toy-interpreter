@@ -32,8 +32,13 @@ public class Main {
                 Examples.example3,
                 Examples.example4,
                 Examples.example5,
-               Examples.example6,
-                Examples.labExample1
+                Examples.additionalExample,
+                Examples.labExample1,
+                Examples.example6
+//                Examples.example7,
+//                Examples.example8,
+//                Examples.example9,
+//                Examples.example10
         );
 
         TextMenu menu = new TextMenu();

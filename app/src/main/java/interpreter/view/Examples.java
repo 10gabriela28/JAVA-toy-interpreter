@@ -2,24 +2,9 @@
 package interpreter.view;
 
 import interpreter.model.exp.*;
-import interpreter.model.stmt.IStmt;
-import interpreter.model.stmt.VarDeclStmt;
-import interpreter.model.stmt.AssignStmt;
-import interpreter.model.stmt.IfStmt;
-import interpreter.model.stmt.PrintStmt;
-import interpreter.model.stmt.NopStmt;
-import interpreter.model.stmt.CompStmt;
-import interpreter.model.stmt.OpenRFileStmt;
-import interpreter.model.stmt.ReadFileStmt;
-import interpreter.model.stmt.CloseRFileStmt;
-import interpreter.model.type.IType;
-import interpreter.model.type.IntType;
-import interpreter.model.type.BoolType;
-import interpreter.model.type.StringType;
-import interpreter.model.value.IValue;
-import interpreter.model.value.IntValue;
-import interpreter.model.value.BoolValue;
-import interpreter.model.value.StringValue;
+import interpreter.model.stmt.*;
+import interpreter.model.type.*;
+import interpreter.model.value.*;
 
 public class Examples {
     public static final IStmt example1 = new CompStmt(new VarDeclStmt("v", new IntType()),
@@ -83,7 +68,7 @@ public class Examples {
 
     // my own example :) - very similar to example 4. just genuinely trying to understand this concept.
     // string fileP  ; fileP = "test2.in"; int a; string customMsg1; customMsg1 = "oops :("; string customMsg2; customMsg2 = "tough luck :("; if (!fileP.isEmpty()) { openRFile(fileP); readFile(fileP, a)  ; if (a > 10) { print(a) } else { print(customMsg1); } closeRFile(fileP); } else { print(customMsg2); }
-    public static IStmt example6 = new CompStmt(
+    public static IStmt additionalExample = new CompStmt(
             new VarDeclStmt("fileP", new StringType()),
             new CompStmt(
                     new AssignStmt("fileP", new ValueExp(new StringValue("test2.in"))),
@@ -143,5 +128,55 @@ public class Examples {
                     )
             )
     );
+
+    public static final IStmt example6 = new CompStmt(
+            new VarDeclStmt("v", new RefType(new IntType())),
+            new CompStmt(
+                    new NewStmt("v", new ValueExp(new IntValue(20))),
+                    new CompStmt(
+                            new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                            new CompStmt(
+                                    new NewStmt("a", new VarExp("v")),
+                                    new CompStmt(
+                                            new PrintStmt(new VarExp("v")),
+                                            new PrintStmt(new VarExp("a"))
+                                    )
+                            )
+                    )
+            )
+    );
+
+    public static IStmt example7 = new CompStmt(
+            new VarDeclStmt("v", new RefType(new IntType())),
+            new CompStmt(
+                    new NewStmt("v", new ValueExp(new IntValue(20))),
+                    new CompStmt(
+                            new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                            new CompStmt(
+                                    new NewStmt("a", new VarExp("v")),
+                                    new CompStmt(
+                                            new PrintStmt(new ReadHeapExp(new VarExp("v"))),
+                                            new PrintStmt(new ReadHeapExp(new ArithExp(ArithOp.ADD, new ReadHeapExp(new VarExp("a")), new ValueExp(new IntValue(5)))))
+                                            )
+                            )
+
+                    )
+            )
+    );
+
+//    public static IStmt example8 = new CompStmt(
+//            new VarDeclStmt("v", new RefType(new IntType())),
+//            new CompStmt(
+//
+//            )
+//    );
+//
+//    public static IStmt example9 = new CompStmt(
+//
+//    );
+//
+//    public static IStmt example10 = new CompStmt(
+//
+//    );
 
 }

@@ -17,7 +17,7 @@ public record WhileStmt(IExp cond, IStmt body) implements IStmt {
 
         IValue val = cond.eval(symTable, heap);
         if (!(val instanceof BoolValue(boolean conditionVal))) {
-            throw new StatementException("While condition is not a boolean value.");
+            throw new StatementException("the while condition is not a boolean value!");
         }
 
         if (conditionVal) {

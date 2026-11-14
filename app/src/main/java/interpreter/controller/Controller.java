@@ -14,6 +14,7 @@ import interpreter.model.adt.IStack;
 import interpreter.model.adt.IList;
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.StatementException;
+import static interpreter.controller.GarbageCollector.*;
 
 public class Controller {
     private IRepository repo;
@@ -46,9 +47,12 @@ public class Controller {
     public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
         repo.logPrgStateExec();
-        display(prg);
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
+            repo.logPrgStateExec();
+            prg.getHeap().setContent(unsafeGarbageCollector(
+                    getAddrFromSymTable(prg.getSymTable().toMap().values()),
+                    prg.getHeap().getContent()));
             repo.logPrgStateExec();
             display(prg);
         }

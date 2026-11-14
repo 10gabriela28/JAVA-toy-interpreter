@@ -1,6 +1,12 @@
 
 package interpreter.controller;
 
+import java.util.Set;
+import java.util.Map;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import interpreter.model.value.*;
+
 public class GarbageCollector {
     private GarbageCollector() {}
 
